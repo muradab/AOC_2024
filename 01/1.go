@@ -22,6 +22,7 @@ func main() {
 	total := 0
 	left := make([]int, 0)
 	right := make([]int, 0)
+	right_count := make(map[int]int, 0)
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -40,6 +41,7 @@ func main() {
 			fmt.Println("Error parsing first part:", err)
 			return
 		}
+		right_count[int(secondInt)]++
 		left = append(left, int(firstInt))
 		right = append(right, int(secondInt))
 
@@ -49,13 +51,11 @@ func main() {
 	slices.Sort(left)
 	slices.Sort(right)
 	fmt.Println(len(left))
-
+	fmt.Println(right_count)
 	for i := 0; i < len(left); i++ {
 
-		total += abs(right[i] - left[i])
 		fmt.Println(left[i], right[i])
-		fmt.Println(left[i] - right[i])
-		fmt.Println(abs(right[i] - left[i]))
+		total += left[i] * right_count[left[i]]
 
 	}
 
