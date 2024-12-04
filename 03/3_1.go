@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func main() {
+func Part1() {
 
 	file, err := os.ReadFile("03/day3.txt")
 
@@ -56,6 +56,9 @@ func main() {
 					start = i
 
 				}
+			}
+			if i > 4 && strings.Join(lines[i-4:i], "") == "don't" {
+
 			}
 
 		}
