@@ -17,6 +17,7 @@ func main() {
 	}
 
 	pairs := make([][]int, 100)
+	partner := make([][]int, 100)
 
 	item := (strings.Split(string(file), "\n"))
 	start := 0
@@ -37,25 +38,23 @@ func main() {
 			panic(err)
 		}
 		pairs[right] = append(pairs[right], left)
+		partner[left] = append(partner[left], right)
 	}
 	ans := 0
-
+	ans2 := 0
 	for i := start + 1; i < len(item); i++ {
 		disallowed := make(map[int]int)
 		// split the string
-		part := strings.Split(item[i], ",")
+		value := strings.Split(item[i], ",")
+		part := convertToIntArray(value)
 		good := true
-		fmt.Println(part)
 
-		for _, v := range part {
-			fmt.Println(disallowed)
+		for _, num := range part {
+
 			// convert to int
-			num, err := strconv.Atoi(v)
-			if err != nil {
-				panic(err)
-			}
+
 			if _, ok := disallowed[num]; ok {
-				fmt.Println("been here", num)
+
 				good = false
 			}
 			disallowed[num]++
@@ -65,12 +64,47 @@ func main() {
 		}
 		if good {
 			// take the middle element
-			item, _ := strconv.Atoi(part[len(part)/2])
-			ans += item
-		}
+			ans += part[len(part)/2]
 
+		} else {
+
+			news := make(map[int]int)
+			for i := 0; i < len(part); i++ {
+				for j := 0; j < len(part); j++ {
+					if i == j {
+						continue
+					}
+					for _, v := range partner[part[i]] {
+						if part[j] == v {
+							news[part[i]]++
+						}
+					}
+
+				}
+			}
+			for k, v := range news {
+				if v == len(part)/2 {
+					ans2 += k
+				}
+			}
+			fmt.Println(news)
+		}
 	}
+
 	fmt.Println(start)
 
 	fmt.Println(ans)
+	fmt.Println(ans2)
+}
+
+func convertToIntArray(s []string) []int {
+	var ans []int
+	for _, v := range s {
+		num, err := strconv.Atoi(v)
+		if err != nil {
+			panic(err)
+		}
+		ans = append(ans, num)
+	}
+	return ans
 }
