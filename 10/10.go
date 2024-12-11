@@ -134,7 +134,7 @@ func dp(start Coordinate, height int, grid [][]int, dirs []int) int {
 	for i := 0; i < 4; i++ {
 		x := start.x + dirs[i]
 		y := start.y + dirs[i+1]
-		if !inbound(x, y, len(grid), len(grid[0])) {
+		if !(x >= 0 && x < len(grid) && y >= 0 && y < len(grid[0])) {
 			continue
 		}
 		if grid[x][y] == height+1 {
