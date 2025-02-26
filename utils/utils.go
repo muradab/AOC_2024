@@ -26,6 +26,50 @@ type Heap[T any] struct {
 	lessFunc func(a, b T) bool
 }
 
+type UnionFind[T comparable] struct {
+	parent map[T]T
+	rank   map[T]int
+}
+
+func NewUnionFind[T comparable]() *UnionFind[T] {
+	return &UnionFind[T]{
+		parent: make(map[T]T),
+		rank:   make(map[T]int),
+	}
+}
+
+func (uf *UnionFind[T]) Find(x T) T {
+	if _, exists := uf.parent[x]; !exists {
+		uf.parent[x] = x
+		uf.rank[x] = 1
+	}
+
+	if uf.parent[x] != x {
+		uf.parent[x] = uf.Find(uf.parent[x])
+	}
+	return uf.parent[x]
+}
+
+func (uf *UnionFind[T]) Union(x, y T) {
+	rootX := uf.Find(x)
+	rootY := uf.Find(y)
+
+	if rootX != rootY {
+		if uf.rank[rootX] > uf.rank[rootY] {
+			uf.parent[rootY] = rootX
+		} else if uf.rank[rootX] < uf.rank[rootY] {
+			uf.parent[rootX] = rootY
+		} else {
+			uf.parent[rootY] = rootX
+			uf.rank[rootX]++
+		}
+	}
+}
+
+func (uf *UnionFind[T]) Connected(x, y T) bool {
+	return uf.Find(x) == uf.Find(y)
+}
+
 func NewHeap[T any](lessFunc func(a, b T) bool) *Heap[T] {
 	return &Heap[T]{
 		data:     []T{},

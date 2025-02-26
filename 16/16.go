@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"strconv"
+	// "strconv"
 
 	"github.com/muradab/advent_of_code/utils"
 )
@@ -48,6 +48,8 @@ func main() {
 
 		if state.x == 1 && state.y == COLS-2 {
 			fmt.Println(state.cost)
+
+			fmt.Println("print the cost")
 			break
 
 			// break
@@ -81,42 +83,41 @@ func main() {
 		}
 	}
 
-	queue := make([]position, 0)
-	queue = append(queue, position{x: 1, y: COLS - 2})
-	seen := make(map[position]bool)
-	fmt.Println(prev[position{x: 10, y: 1}], "megenteta")
-	fmt.Println(prev[position{x: 11, y: 2}], "megenteta")
-	count := 0
+	// queue := make([]position, 0)
+	// queue = append(queue, position{x: 1, y: COLS - 2})
+	// seen := make(map[position]bool)
 
-	for len(queue) > 0 {
-		fmt.Println(queue)
+	// count := 0
 
-		state := queue[0]
-		queue = queue[1:]
-		count++
+	// for len(queue) > 0 {
+	// 	fmt.Println(queue)
 
-		for _, pair := range prev[state] {
+	// 	state := queue[0]
+	// 	queue = queue[1:]
+	// 	count++
 
-			queue = append(queue, pair)
-			seen[pair] = true
+	// 	for _, pair := range prev[state] {
 
-		}
-	}
-	ir := make([][]string, ROWS)
+	// 		queue = append(queue, pair)
+	// 		seen[pair] = true
 
-	for i := 0; i < ROWS; i++ {
-		for j := 0; j < COLS; j++ {
-			if v, ok := visited[position{x: i, y: j}]; ok {
-				ir[i] = append(ir[i], strconv.Itoa(v))
-			} else {
-				ir[i] = append(ir[i], string(grid[i][j]))
+	// 	}
+	// }
+	// ir := make([][]string, ROWS)
 
-			}
-		}
-	}
-	fmt.Println(count)
-	for _, row := range ir {
-		fmt.Println(fmt.Sprintf(fmt.Sprintf("%%-%ds", 4), row))
-	}
+	// for i := 0; i < ROWS; i++ {
+	// 	for j := 0; j < COLS; j++ {
+	// 		if v, ok := visited[position{x: i, y: j}]; ok {
+	// 			ir[i] = append(ir[i], strconv.Itoa(v))
+	// 		} else {
+	// 			ir[i] = append(ir[i], string(grid[i][j]))
+
+	// 		}
+	// 	}
+	// }
+	// fmt.Println(count)
+	// for _, row := range ir {
+	// 	fmt.Println(fmt.Sprintf(fmt.Sprintf("%%-%ds", 4), row))
+	// }
 
 }
